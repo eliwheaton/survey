@@ -1,9 +1,8 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const questions = require('../controllers/questions');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+// Show survey question
+router.get('/', questions.display);
 
 module.exports = router;
