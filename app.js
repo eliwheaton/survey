@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-// const favicon = require('serve-favicon');
+const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
@@ -11,7 +11,7 @@ const passport = require('passport');
 const hbs = require('hbs');
 const models = require('./models');
 
-const redisClient = redis.createClient();
+const redisClient = redis.createClient(process.env.REDIS_URL);
 
 // Sync Database
 models.sequelize.sync().then(() => {
@@ -33,7 +33,7 @@ app.set('view engine', 'hbs');
 hbs.registerPartials(path.join(__dirname, 'views/partials'));
 
 // uncomment after placing your favicon in /public
-// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public/images', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
