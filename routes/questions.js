@@ -1,7 +1,8 @@
 const express = require('express');
-const router = express.Router();
 const auth = require('../lib/auth');
 const questions = require('../controllers/questions');
+
+const router = express.Router();
 
 // Questions list
 router.get('/', auth.check, questions.index);

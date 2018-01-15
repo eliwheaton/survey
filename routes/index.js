@@ -1,6 +1,7 @@
 const express = require('express');
-const router = express.Router();
 const questions = require('../controllers/questions');
+
+const router = express.Router();
 
 // Show survey question
 router.get('/', questions.display);

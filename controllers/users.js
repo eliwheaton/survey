@@ -2,9 +2,9 @@ const passport = require('passport');
 const User = require('../models').user;
 
 // Show sign up page
-exports.signup = (req, res, next) => {
+exports.signup = (req, res) => {
   res.render('users/signup');
-}
+};
 
 // Register new user
 exports.create = (req, res, next) => {
@@ -12,16 +12,16 @@ exports.create = (req, res, next) => {
     if (err) return next(err);
     if (!user) return next(new Error('Error registering user.'));
 
-    passport.authenticate('local')(req, res, () => {
+    return passport.authenticate('local')(req, res, () => {
       res.redirect('/questions');
     });
   });
-}
+};
 
-exports.signin = (req, res, next) => {
+exports.signin = (req, res) => {
   res.render('users/signin');
-}
+};
 
-exports.authenticate = (req, res, next) => {
+exports.authenticate = (req, res) => {
   res.redirect('/questions');
-}
+};

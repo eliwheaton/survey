@@ -3,105 +3,73 @@ const Answer = require('../models').answer;
 const Survey = require('../models').survey;
 const Sequelize = require('sequelize');
 
-exports.index = (req, res, next) => {
-  Question.findAll().then(questions => {
-    res.render('questions/index', { questions: questions });
-  })
-}
+exports.index = (req, res) => {
+  Question.findAll().then((questions) => {
+    res.render('questions/index', { questions });
+  });
+};
 
 // Add question form
-exports.addForm = (req, res, next) => {
+exports.addForm = (req, res) => {
   res.render('questions/add');
-}
+};
 
 // Create survey question
 exports.create = (req, res, next) => {
-  
   // Create question
   Question.create({
-    text: req.body.question
+    text: req.body.question,
+    multiple: req.body.multiple || false,
   })
-  .then(question => {
+    .then((question) => {
+      // Get all the answers
+      const answers = req.body.answers.filter(answer => answer !== '');
 
-    // Get all the answers
-    let answers = req.body.answers.filter(answer => answer != '');
+      // Create all the answers
+      const promises = answers.map(answer => (
+        Answer.create({
+          text: answer,
+          questionId: question.id,
+        })
+      ));
 
-    // Create all the answers
-    let promises = answers.map(answer => {
-      return Answer.create({
-        text: answer,
-        questionId: question.id
-      });
-    });
-
-    Promise.all(promises)
-    .then(() => {
-      res.redirect('/questions');
+      Promise.all(promises)
+        .then(() => {
+          res.redirect('/questions');
+        })
+        .catch(err => next(err));
     })
-    .catch(err => {
-      return next(err);
-    })
-
-  })
-  .catch(err => {
-    return next(err);
-  });
-
-}
+    .catch(err => next(err));
+};
 
 // Show a survey question
 exports.display = (req, res, next) => {
-  const Op = Sequelize.Op;
+  const { Op } = Sequelize;
 
   // Get any surveys that this guest has already answered.
   Survey.findAll({
     attributes: ['questionId'],
     where: { guestId: req.session.id },
-    raw: true
+    raw: true,
   })
-  .then(completedSurveys => {
+    .then((completedSurveys) => {
+      // Get the question Ids
+      const questionIds = completedSurveys.map(question => question.questionId);
 
-    // Get the question Ids
-    let questionIds = completedSurveys.map(question => {
-      return question.questionId;
-    });
-
-    // Select a question that they haven't already answered.
-    Question.findOne({
-      include: [{
-        model: Answer
-      }],
-      where: {
-        id: {
-          [Op.notIn]: questionIds
-        }
-      }
+      // Select a question that they haven't already answered.
+      Question.findOne({
+        include: [{
+          model: Answer,
+        }],
+        where: {
+          id: {
+            [Op.notIn]: questionIds,
+          },
+        },
+      })
+        .then((question) => {
+          res.render('questions/display', { question });
+        }).catch(err => next(err));
     })
-    .then(question => {
-      res.render('questions/display', { question: question });
-    }).catch(err => {
-      return next(err);
-    })
-
-  })
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    .catch(err => next(err));
+};

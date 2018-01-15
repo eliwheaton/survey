@@ -1,25 +1,24 @@
 const express = require('express');
 const path = require('path');
-const favicon = require('serve-favicon');
+// const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const redis = require('redis');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
-const redisClient = redis.createClient();
 const passport = require('passport');
 const hbs = require('hbs');
-const env = require('dotenv').load();
 const models = require('./models');
 
-//Sync Database
-models.sequelize.sync().then(function() {
-  console.log('Database synced up.')
-}).catch(function(err) {
-  console.log(err, "Bro, something went wrong with your DB.")
-});
+const redisClient = redis.createClient();
 
+// Sync Database
+models.sequelize.sync().then(() => {
+  console.log('Database synced.');
+}).catch((err) => {
+  console.log(err, 'Oops, something went wrong with the DB.');
+});
 
 const index = require('./routes/index');
 const users = require('./routes/users');
@@ -31,10 +30,10 @@ const app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
-hbs.registerPartials(__dirname + '/views/partials');
+hbs.registerPartials(path.join(__dirname, 'views/partials'));
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -45,11 +44,11 @@ app.use(session({
   store: new RedisStore({
     host: 'localhost',
     port: 6379,
-    client: redisClient
+    client: redisClient,
   }),
   secret: 'you should hire Eli',
   saveUninitialized: true,
-  resave: false
+  resave: false,
 }));
 
 app.use(passport.initialize());
@@ -75,14 +74,14 @@ app.use('/questions', questions);
 app.use('/surveys', surveys);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  let err = new Error('Not Found');
+app.use((req, res, next) => {
+  const err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use((err, req, res) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
