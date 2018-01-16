@@ -8,7 +8,7 @@ This is a survey app built with node, express, and sequelize.
 * [Redis](https://redis.io/) >= 2.8.5
 * [MySQL](https://www.mysql.com/)
 
-## Install Redis
+## Setup Redis
 
 This app uses Redis to store sessions.
 
@@ -22,16 +22,20 @@ Start the redis server
 $ redis-server
 ```
 
+## Setup MySQL Database
+
+You will need to create a database named 'surveydb' and a user named 'sumouser' with password 'sumopassword'.
+
+**Note:** If you want to use different credentials you will need to edit the .env file in the root folder.
+
+
 ## Install
 
 ```sh
 $ git clone git://github.com/eliwheaton/survey.git
+$ cd survey
 $ npm install
 ```
-
-## MySQL Database
-
-You will need to create a database named 'surveydb' and a user named 'sumouser' with password 'sumopassword'.
 
 To run the app:
 
