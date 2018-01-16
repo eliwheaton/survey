@@ -43,4 +43,33 @@ To run the app:
 $ npm run dev
 ```
 
-Then visit [http://localhost:3000/](http://localhost:3000/)
+## Create Admin User
+
+Visit [http://localhost:3000/users/signup](http://localhost:3000/users/signup)
+
+Enter any info for username and password.
+
+## Create Survey Questions
+
+Once logged in, click on 'Add Question' to create questions for the survey.
+
+## View Survey Questions
+
+To view survey questions click on 'SumoSurvey' in the nav bar or visit [http://localhost:3000/](http://localhost:3000/)
+
+## Admin Login
+
+If you logout and want to sign back in, visit: [http://localhost:3000/users/signin](http://localhost:3000/users/signin)
+
+## Results
+
+The results page is a work in progress...
+
+
+
+
+
+
+
+
+
