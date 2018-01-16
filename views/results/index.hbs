@@ -1,6 +1,33 @@
 
 <div class="row">
   <div class="col-12">
-    <h2>Total completed surveys: {{total}}</h2>
+    
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Session Id</th>
+          <th scope="col">Question</th>
+          <th scope="col">Answers</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        {{#each surveys}}
+          <tr>
+            <th scope="row">{{@index}}</th>
+            <td>{{guestId}}</td>
+            <td>{{questionText}}</td>
+            <td>
+              {{#each surveyAnswers}}
+                <p>{{answerText}}</p>
+              {{/each}}
+            </td>
+          </tr>
+        {{/each}}
+
+      </tbody>
+    </table>
+
   </div>
 </div>
