@@ -12,4 +12,7 @@ router.post('/signup', users.create);
 router.get('/signin', users.signin);
 router.post('/signin', passport.authenticate('local'), users.authenticate);
 
+// Log out
+router.get('/logout', users.logout);
+
 module.exports = router;

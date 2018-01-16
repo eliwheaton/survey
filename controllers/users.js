@@ -25,3 +25,9 @@ exports.signin = (req, res) => {
 exports.authenticate = (req, res) => {
   res.redirect('/questions');
 };
+
+exports.logout = (req, res) => {
+  req.logout();
+  return res.redirect('/users/signin');
+};
+
