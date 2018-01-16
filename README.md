@@ -61,9 +61,18 @@ To view survey questions click on 'SumoSurvey' in the nav bar or visit [http://l
 
 If you logout and want to sign back in, visit: [http://localhost:3000/users/signin](http://localhost:3000/users/signin)
 
-## Results
+## Results Page
 
 The results page is a work in progress...
+
+## DEMO
+
+To view a live demo of this app, visit: [https://sumo-survey.herokuapp.com/users/signin](https://sumo-survey.herokuapp.com/users/signin)
+
+And login with:
+username: hireeli
+password: hireeli
+
 
 
 
