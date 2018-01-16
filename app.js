@@ -24,6 +24,7 @@ const index = require('./routes/index');
 const users = require('./routes/users');
 const questions = require('./routes/questions');
 const surveys = require('./routes/surveys');
+const results = require('./routes/results');
 
 const app = express();
 
@@ -72,6 +73,7 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/questions', questions);
 app.use('/surveys', surveys);
+app.use('/results', results);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
