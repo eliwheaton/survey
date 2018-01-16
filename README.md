@@ -69,8 +69,8 @@ The results page is a work in progress...
 
 To view a live demo of this app, visit: [https://sumo-survey.herokuapp.com/users/signin](https://sumo-survey.herokuapp.com/users/signin)
 
-And login with:
-username: hireeli
+And login with:<br/>
+username: hireeli<br/>
 password: hireeli
 
 
