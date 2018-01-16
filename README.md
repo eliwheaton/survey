@@ -10,6 +10,8 @@ This is a survey app built with node, express, and sequelize.
 
 ## Install Redis
 
+This app uses Redis to store sessions.
+
 ```sh
 $ brew install redis
 ```
